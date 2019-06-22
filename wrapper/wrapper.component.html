@@ -1,0 +1,37 @@
+<justpop-modal [popupId]='popupId'>
+    <div class="modal">
+        <div class="modal-header" [ngClass]="'custom-header-'+ popupId" [ngStyle]="{'background-color': config.theme.header_container.background }">
+            <img [src]="config.theme.header_container.left_image" class="sp-custom-img" [ngStyle]="{'width': config.theme.header_container.left_width }" *ngIf="config.theme.header_container.left_image !== '';else imageTemp">
+            <ng-template #imageTemp>
+                <i class="help-icon">?</i>
+            </ng-template>
+            <span class=" title " [innerHTML]="config.theme.header_container.title "></span>
+        </div>
+        <div class="modal-body" [ngClass]="'custom-body-'+ popupId" [ngStyle]="{'background-color': config.theme.body_container.background }">
+
+            <div class="list " #container (scroll)="refresh() ">
+                <div class="list-view" [ngClass]="'custom-content-'+ popupId">
+
+                    <div *ngIf="!isLoaded; else Loaded">
+                        LOADING ...
+                    </div>
+
+                    <ng-template #Loaded>
+                        {{ config.theme.body_container.content }}
+                    </ng-template>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="modal-footer" [ngClass]="'custom-footer-'+ popupId" [ngStyle]="{'background-color': config.theme.footer_container.background }">
+
+            <a class="wavey-efx " (click)="moreInfo(config.buttons.left.path, popupId)" [attr.href]="config.buttons.left.path" [attr.target]="'_'+config.buttons.left.target" *ngIf="config.buttons.left.enabled && config.buttons.left.routing">{{config.buttons.left.label}}</a>
+
+            <button class="btn wavey-efx " [ngClass]="config.buttons.right.color " (click)="closeModal(popupId)" *ngIf="config.buttons.right.enabled">{{config.buttons.right.label}}</button> &nbsp;
+
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</justpop-modal>
